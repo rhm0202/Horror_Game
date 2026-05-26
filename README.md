@@ -43,9 +43,9 @@
 
 ## 프로젝트 구조
 
-\`\`\`
+```
 Assets/
-├── _Game/                  # 직접 제작 리소스
+├── _Game/                  # 실사용 리소스
 │   ├── Scripts/
 │   │   ├── Player/         # 플레이어 이동, 손전등, 상호작용
 │   │   ├── Enemy/          # 유령 AI (순찰, 추적, 분노 상태)
@@ -55,10 +55,11 @@ Assets/
 │   ├── Prefabs/            # 프리팹
 │   ├── Materials/          # 머티리얼
 │   └── Audio/              # BGM, SFX
-├── Dnk_Dev/                # Hospital Horror Pack (구매 에셋)
-├── Electric Torch/         # Electric Torch (구매 에셋)
-└── HorrorPuzzleItems/      # Horror Puzzle Items (구매 에셋)
-\`\`\`
+└── ThirdParty/             # 외부 다운로드 에셋
+    ├── Dnk_Dev/            # Hospital Horror Pack
+    ├── Electric Torch/     # Electric Torch
+    └── HorrorPuzzleItems/  # Horror Puzzle Items
+```
 
 ---
 
