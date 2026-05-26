@@ -13,7 +13,7 @@
 |------|------|
 | 장르 | 1인칭 공포 방탈출 (First-Person Horror Escape) |
 | 플랫폼 | Windows (PC) |
-| 엔진 | Unity |
+| 엔진 | Unity 6.3 LTS |
 | 목표 플레이 시간 | 15 ~ 20분 |
 | 레퍼런스 | Outlast, Amnesia: The Dark Descent, Layers of Fear |
 
@@ -87,6 +87,6 @@ Assets/
 
 ## 개발 환경
 
-- Unity 2022.x 이상
+- Unity 6.3 LTS (6000.3.16f1)
 - Windows 10 / 11
 - Git + GitHub
