@@ -55,6 +55,9 @@ Assets/
 │   │   ├── Manager/              # 게임 매니저
 │   │   └── UI/                   # 소지품 UI, 메시지 안내
 │   ├── Items/                    # 아이템 ScriptableObject
+│   ├── Sprites/
+│   │   ├── Items/                # 아이템 아이콘
+│   │   └── UI/                   # 손전등 상태 아이콘 등 UI 이미지
 │   ├── Scenes/                   # 게임 씬
 │   ├── Prefabs/                  # 프리팹
 │   ├── Materials/                # 머티리얼
