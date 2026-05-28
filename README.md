@@ -57,7 +57,12 @@ Assets/
 │   ├── Items/                    # 아이템 ScriptableObject
 │   ├── Sprites/
 │   │   ├── Items/                # 아이템 아이콘
-│   │   └── UI/                   # 손전등 상태 아이콘 등 UI 이미지
+│   │   └── UI/                   # UI 이미지
+│   │       ├── Background/       # 씬별 배경 이미지
+│   │       ├── Button/           # 버튼 이미지
+│   │       ├── HUD/              # 크로스헤어, 손전등 상태 아이콘
+│   │       ├── Inventory/        # 인벤토리 UI 파츠
+│   │       └── Title/            # 타이틀 텍스트 이미지
 │   ├── Scenes/                   # 게임 씬
 │   ├── Prefabs/                  # 프리팹
 │   ├── Materials/                # 머티리얼
