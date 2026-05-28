@@ -296,8 +296,6 @@ MonoBehaviour:
   moveSpeed: 3
   mouseSensitivity: 2
   cameraTransform: {fileID: 6903551556872612223}
-  interactRange: 2.5
-  interactKey: f
 --- !u!114 &6292318352068841870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +317,50 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6903551556872612223}
     m_Modifications:
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: chooseKeyForCookie
+      value: R
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightCookie.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: 'lightCookie.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2800000, guid: 450d195e6a6eb4447a4ad8e358c7acfe, type: 3}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[0].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[0].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[0].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[0].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[1].a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[1].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665389505284840978, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: lightColors.Array.data[1].r
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5930713017768781451, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
       propertyPath: m_Name
       value: Torch
@@ -327,10 +369,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5940405663905988839, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: m_SpotAngle
+      value: 81.27604
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940405663905988839, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 73.07812
+      objectReference: {fileID: 0}
     - target: {fileID: 7574103458312994616, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
       propertyPath: _torchOnOff
       value: 
       objectReference: {fileID: 4199608620514187953}
+    - target: {fileID: 7610731521187637987, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
+      propertyPath: intensityLight
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7610731521187637987, guid: a0c3633c489cc714c9c99cfd940deb5d, type: 3}
       propertyPath: _emissionMaterialFade
       value: 
