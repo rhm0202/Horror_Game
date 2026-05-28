@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5783285195553828508}
   - component: {fileID: 4564646798379910137}
   - component: {fileID: 6140611548397867533}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torch_item
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 3514093027003125207}
   - component: {fileID: 4254859812674279835}
   - component: {fileID: 4890408844573935926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}

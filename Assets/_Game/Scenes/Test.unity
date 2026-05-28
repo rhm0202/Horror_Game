@@ -3005,6 +3005,9 @@ MonoBehaviour:
   cameraTransform: {fileID: 1347356221}
   interactRange: 2.5
   interactKey: f
+  itemLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1546591500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4967,22 +4970,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 118836654453469365, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: m_Range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 118836654453469365, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: m_SpotAngle
-      value: 81.27604
-      objectReference: {fileID: 0}
-    - target: {fileID: 118836654453469365, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: m_InnerSpotAngle
-      value: 73.07812
-      objectReference: {fileID: 0}
-    - target: {fileID: 4199608620514187953, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: intensityLight
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4623766920897156739, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5022,66 +5009,6 @@ PrefabInstance:
     - target: {fileID: 4623766920897156739, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: chooseKeyForCookie
-      value: R
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightCookie.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: 'lightCookie.Array.data[0]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: 'lightCookie.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2800000, guid: 450d195e6a6eb4447a4ad8e358c7acfe, type: 3}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: 'lightCookie.Array.data[2]'
-      value: 
-      objectReference: {fileID: 2800000, guid: 450d195e6a6eb4447a4ad8e358c7acfe, type: 3}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: 'lightCookie.Array.data[3]'
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[0].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[0].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[0].g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[0].r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[1].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[1].b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[1].g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4956801666721640000, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
-      propertyPath: lightColors.Array.data[1].r
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8152998597693560717, guid: e18c2908e3fb5d34591f31dfa3382ed2, type: 3}
       propertyPath: m_Name
