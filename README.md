@@ -45,20 +45,24 @@
 
 ```
 Assets/
-├── _Game/                  # 실사용 리소스
+├── _Game/                        # 실사용 리소스
 │   ├── Scripts/
-│   │   ├── Player/         # 플레이어 이동, 손전등, 상호작용
-│   │   ├── Enemy/          # 유령 AI (순찰, 추적, 분노 상태)
-│   │   ├── Interaction/    # 아이템, 오브젝트 상호작용
-│   │   └── UI/             # 소지품 UI, 메시지 안내
-│   ├── Scenes/             # 게임 씬
-│   ├── Prefabs/            # 프리팹
-│   ├── Materials/          # 머티리얼
-│   └── Audio/              # BGM, SFX
-└── ThirdParty/             # 외부 다운로드 에셋
-    ├── Dnk_Dev/            # Hospital Horror Pack
-    ├── Electric Torch/     # Electric Torch
-    └── HorrorPuzzleItems/  # Horror Puzzle Items
+│   │   ├── Player/               # 플레이어 이동, 인벤토리
+│   │   │   └── Flashlight/       # 손전등 on/off, UV 모드
+│   │   ├── Item/                 # 아이템 데이터, 줍기
+│   │   ├── Interactable/         # 문, 서랍, 키패드 등
+│   │   ├── Enemy/                # 유령 AI
+│   │   ├── Manager/              # 게임 매니저
+│   │   └── UI/                   # 소지품 UI, 메시지 안내
+│   ├── Items/                    # 아이템 ScriptableObject
+│   ├── Scenes/                   # 게임 씬
+│   ├── Prefabs/                  # 프리팹
+│   ├── Materials/                # 머티리얼
+│   └── Audio/                    # BGM, SFX
+└── ThirdParty/                   # 외부 다운로드 에셋
+    ├── Dnk_Dev/                  # Hospital Horror Pack
+    ├── Electric Torch/           # Electric Torch
+    └── HorrorPuzzleItems/        # Horror Puzzle Items
 ```
 
 ---
