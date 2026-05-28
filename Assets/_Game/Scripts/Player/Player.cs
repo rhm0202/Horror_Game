@@ -6,9 +6,6 @@ public class Player : MonoBehaviour
     [SerializeField] float moveSpeed = 3f;
     [SerializeField] float mouseSensitivity = 2f;
     [SerializeField] Transform cameraTransform;
-    [SerializeField] float interactRange = 2.5f;
-    [SerializeField] string interactKey = "f";
-
     CharacterController cc;
     float verticalRotation = 0f;
 
@@ -23,17 +20,6 @@ public class Player : MonoBehaviour
     {
         Move();
         Rotate();
-        CheckInteract();
-    }
-
-    void CheckInteract()
-    {
-        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
-        {
-            if (Input.GetKeyDown(interactKey.ToLower()) && hit.collider.TryGetComponent(out ItemPickup pickup))
-                pickup.Pickup();
-        }
     }
 
     void Move()

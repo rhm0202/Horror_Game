@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
         }
     }
     readonly List<Item> items = new List<Item>();
+    public Item SelectedItem { get; private set; }
 
     void Awake()
     {
@@ -28,4 +29,6 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item) => items.Add(item);
     public bool HasItem(Item item) => items.Contains(item);
+    public void SelectItem(Item item) => SelectedItem = item;
+    public void ClearSelection() => SelectedItem = null;
 }
