@@ -1,0 +1,11 @@
+Model Information:
+* title:	Electrical Panel Box
+* source:	https://sketchfab.com/3d-models/electrical-panel-box-2954e7bb9eca458a9e08e10261c676cf
+* author:	grapelemonswirl (https://sketchfab.com/grapelemonswirl)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Electrical Panel Box" (https://sketchfab.com/3d-models/electrical-panel-box-2954e7bb9eca458a9e08e10261c676cf) by grapelemonswirl (https://sketchfab.com/grapelemonswirl) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
