@@ -9,10 +9,11 @@ using UnityEngine;
 
 public class ChooseLightCookie : MonoBehaviour
 {
-    public string chooseKeyForCookie = "E";
+    public string chooseKeyForCookie = "R";
     private KeyCode _keyCode;
     [Space]
     public List<Texture> lightCookie = new List<Texture>();
+    public List<Color> lightColors = new List<Color>();
     private Light _thisLight;
     private int _scroolList = 0;
 
@@ -50,6 +51,8 @@ public class ChooseLightCookie : MonoBehaviour
             }
 
             _thisLight.cookie = lightCookie[_scroolList];
+            if (_scroolList < lightColors.Count)
+                _thisLight.color = lightColors[_scroolList];
 
         }
     }

@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class ElectricTorchOnOff : MonoBehaviour
 {
-	EmissionMaterialGlassTorchFadeOut _emissionMaterialFade;
+	[SerializeField] EmissionMaterialGlassTorchFadeOut _emissionMaterialFade;
 	BatteryPowerPickup _batteryPower;
 	//
 
@@ -22,7 +22,7 @@ public class ElectricTorchOnOff : MonoBehaviour
 	public LightChoose modoLightChoose;
 	[Space]
 	[Space]
-	public string onOffLightKey = "F";
+	public string onOffLightKey = "E";
 	private KeyCode _kCode;
 	[Space]
 	[Space]
@@ -39,14 +39,6 @@ public class ElectricTorchOnOff : MonoBehaviour
 	}
     void Start()
 	{
-		GameObject _scriptControllerEmissionFade = GameObject.Find("default");
-
-		if (_scriptControllerEmissionFade != null)
-		{
-			_emissionMaterialFade = _scriptControllerEmissionFade.GetComponent<EmissionMaterialGlassTorchFadeOut>();
-		}
-		if (_scriptControllerEmissionFade  == null) {Debug.Log("Cannot find 'EmissionMaterialGlassTorchFadeOut' script");}
-
 		_kCode = (KeyCode)System.Enum.Parse(typeof(KeyCode), onOffLightKey);
 	}
 
@@ -72,6 +64,8 @@ public class ElectricTorchOnOff : MonoBehaviour
 
 	void InputKey()
     {
+		if (!Inventory.Instance.HasFlashlight) return;
+
 		if (Input.GetKeyDown(_kCode) && _flashLightOn == true)
 		{
 			_flashLightOn = false;
