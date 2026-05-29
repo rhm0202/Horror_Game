@@ -1,0 +1,11 @@
+Model Information:
+* title:	Retrofitted Safe
+* source:	https://sketchfab.com/3d-models/retrofitted-safe-12f4a1025b564264bcdc02424772a47d
+* author:	Seifurt (https://sketchfab.com/seifurt)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Retrofitted Safe" (https://sketchfab.com/3d-models/retrofitted-safe-12f4a1025b564264bcdc02424772a47d) by Seifurt (https://sketchfab.com/seifurt) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

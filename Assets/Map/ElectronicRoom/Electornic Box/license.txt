@@ -1,0 +1,11 @@
+Model Information:
+* title:	Outside Electrical box
+* source:	https://sketchfab.com/3d-models/outside-electrical-box-60cf48a4d4f645d999bcecede7ca9113
+* author:	eXtrime95 (https://sketchfab.com/eXtrime95)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Outside Electrical box" (https://sketchfab.com/3d-models/outside-electrical-box-60cf48a4d4f645d999bcecede7ca9113) by eXtrime95 (https://sketchfab.com/eXtrime95) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

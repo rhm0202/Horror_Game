@@ -1,0 +1,11 @@
+Model Information:
+* title:	Metal Wall Cabinet
+* source:	https://sketchfab.com/3d-models/metal-wall-cabinet-eb03b64d99494f0d8985a03f5fd8df16
+* author:	Andersta Studios (https://sketchfab.com/andersta)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Metal Wall Cabinet" (https://sketchfab.com/3d-models/metal-wall-cabinet-eb03b64d99494f0d8985a03f5fd8df16) by Andersta Studios (https://sketchfab.com/andersta) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
