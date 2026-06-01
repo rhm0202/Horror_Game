@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
                 flashlightObject.SetActive(value);
         }
     }
-    readonly List<Item> items = new List<Item>();
+    readonly HashSet<Item> items = new HashSet<Item>();
     public Item SelectedItem { get; private set; }
 
     void Awake()
@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item item) => items.Add(item);
     public bool HasItem(Item item) => items.Contains(item);
+    public void RemoveItem(Item item) => items.Remove(item);
     public void SelectItem(Item item) => SelectedItem = item;
     public void ClearSelection() => SelectedItem = null;
 }
