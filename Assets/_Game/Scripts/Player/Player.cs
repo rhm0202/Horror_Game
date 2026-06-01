@@ -3,10 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
+    [Header("이동 설정")]
     [SerializeField] float moveSpeed = 3f;
+    [SerializeField] float gravity = -9.81f;
+
+    [Header("마우스 설정")]
     [SerializeField] float mouseSensitivity = 2f;
     [SerializeField] Transform cameraTransform;
+
     CharacterController cc;
+    Vector3 velocity;
     float verticalRotation = 0f;
 
     void Start()
@@ -24,11 +30,17 @@ public class Player : MonoBehaviour
 
     void Move()
     {
+        if (cc.isGrounded && velocity.y < 0)
+            velocity.y = -2f;
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * h + transform.forward * v;
-        cc.SimpleMove(move * moveSpeed);
+        cc.Move(move * moveSpeed * Time.deltaTime);
+
+        velocity.y += gravity * Time.deltaTime;
+        cc.Move(velocity * Time.deltaTime);
     }
 
     void Rotate()
