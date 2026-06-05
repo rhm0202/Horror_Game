@@ -11,9 +11,14 @@ public class Player : MonoBehaviour
     [SerializeField] float mouseSensitivity = 2f;
     [SerializeField] Transform cameraTransform;
 
+    [Header("발소리")]
+    [SerializeField] AudioClip footstepClip;
+    [SerializeField] float footstepInterval = 0.5f;
+
     CharacterController cc;
     Vector3 velocity;
     float verticalRotation = 0f;
+    float footstepTimer;
 
     void Start()
     {
@@ -26,6 +31,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Rotate();
+        HandleFootstep();
     }
 
     void Move()
@@ -53,5 +59,26 @@ public class Player : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -80f, 80f);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+    }
+
+    void HandleFootstep()
+    {
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        bool isMoving = Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f;
+
+        if (cc.isGrounded && isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                SoundManager.Instance.PlayFootstep(footstepClip);
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
     }
 }
