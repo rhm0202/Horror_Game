@@ -40,8 +40,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Rotate();
         Move();          // 이동 처리
         Rotate();        // 시점 회전 처리
         HandleFootstep(); // 발소리 처리
