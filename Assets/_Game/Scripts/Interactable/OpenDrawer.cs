@@ -16,6 +16,7 @@ public class OpenDrawer : MonoBehaviour, IInteractable
     [SerializeField] Collider drawerCollider;
 
     private bool isOpen = false;
+    private bool isLooted = false;
     private Vector3 closedPosition;
     private Vector3 openPosition;
     private Collider col;
@@ -49,7 +50,20 @@ public class OpenDrawer : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (isLooted && !isOpen) return;
+
         isOpen = !isOpen;
         if (col != null) col.enabled = !isOpen;
+
+        if (!isOpen && AllItemsLooted())
+            isLooted = true;
+    }
+
+    private bool AllItemsLooted()
+    {
+        if (drawerItems == null || drawerItems.Length == 0) return false;
+        foreach (ItemPickup item in drawerItems)
+            if (item != null && item.gameObject.activeSelf) return false;
+        return true;
     }
 }
