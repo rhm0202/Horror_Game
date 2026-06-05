@@ -5,9 +5,8 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager Instance { get; private set; }
 
     [SerializeField] Transform cameraTransform;
-    [SerializeField] float interactRange = 2.5f;
-    [SerializeField] string interactKey = "f";
-    [SerializeField] LayerMask itemLayer;
+    [SerializeField] float interactRange = 1.5f;
+    [SerializeField] LayerMask interactableLayer;
 
     void Awake()
     {
@@ -17,12 +16,22 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
-        if (!Input.GetKeyDown(interactKey.ToLower())) return;
-
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactRange, itemLayer)) return;
+        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
 
-        if (hit.collider.TryGetComponent(out ItemPickup pickup))
-            pickup.Pickup();
+        if (!Input.GetKeyDown(KeyCode.F)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit, interactRange, interactableLayer))
+        {
+            Debug.Log("[InteractionManager] 레이캐스트 미스");
+            return;
+        }
+
+        Debug.Log($"[InteractionManager] 레이캐스트 히트: {hit.collider.gameObject.name} / 레이어: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+
+        IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
+        if (interactable != null)
+            interactable.Interact();
+        else
+            Debug.Log("[InteractionManager] IInteractable 없음");
     }
 }

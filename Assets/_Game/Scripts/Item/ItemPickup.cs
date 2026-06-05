@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviour, IInteractable
 {
     [SerializeField] Item item;
 
-    public void Pickup()
+    public void Interact()
     {
         if (item == null) return;
 
