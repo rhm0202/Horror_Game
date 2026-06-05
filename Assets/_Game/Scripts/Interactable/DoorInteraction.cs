@@ -47,4 +47,10 @@ public class DoorInteraction : MonoBehaviour, IInteractable
         isLocked = false;
         Debug.Log($"[{gameObject.name}] 잠금 해제됨");
     }
+
+    public void UnlockAndOpen()
+    {
+        isLocked = false;
+        isOpen = true;
+    }
 }

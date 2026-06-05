@@ -69,4 +69,25 @@ public class UIManager : MonoBehaviour
         Debug.Log("[자물쇠] 틀림");
         // TODO: 오답 피드백 (흔들림, 효과음 등)
     }
+
+    [Header("금고 UI")]
+    [SerializeField] SafeUI safeUI;
+
+    public void ShowSafe(SafeInteractable safe)
+    {
+        if (safeUI != null) safeUI.Open(safe);
+        else Debug.Log("[금고] UI 열림");
+    }
+
+    public void CloseSafe()
+    {
+        if (safeUI != null) safeUI.Close();
+        else Debug.Log("[금고] UI 닫힘");
+    }
+
+    public void OnSafeWrong()
+    {
+        if (safeUI != null) safeUI.OnWrongFeedback();
+        else Debug.Log("[금고] 틀림");
+    }
 }

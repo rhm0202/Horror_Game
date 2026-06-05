@@ -5,7 +5,7 @@ public class InteractionManager : MonoBehaviour
     public static InteractionManager Instance { get; private set; }
 
     [SerializeField] Transform cameraTransform;
-    [SerializeField] float interactRange = 2.5f;
+    [SerializeField] float interactRange = 1.5f;
     [SerializeField] LayerMask interactableLayer;
 
     void Awake()
