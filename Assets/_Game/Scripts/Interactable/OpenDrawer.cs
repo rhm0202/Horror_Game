@@ -1,54 +1,69 @@
 using UnityEngine;
 
-public class OpenDrawer : MonoBehaviour
+public class OpenDrawer : MonoBehaviour, IInteractable
 {
     [Header("서랍 설정")]
-    public float openDistance = 0.4f;    // 서랍 열리는 거리
-    public float openSpeed = 3f;          // 열리는 속도
-    public float interactDistance = 2f;   // 상호작용 가능 거리
+    public float openDistance = 0.4f;
+    public float openSpeed = 3f;
 
     [Header("열리는 방향 (보통 Z축)")]
     public Vector3 openDirection = Vector3.forward;
 
-    [Header("UI")]
-    public GameObject interactUI;         // "E 상호작용" UI (없으면 무시)
+    [Header("서랍 안 아이템 (없으면 바로 닫기 가능)")]
+    [SerializeField] ItemPickup[] drawerItems;
+
+    [Header("서랍 콜라이더 (직접 연결)")]
+    [SerializeField] Collider drawerCollider;
 
     private bool isOpen = false;
+    private bool isLooted = false;
     private Vector3 closedPosition;
     private Vector3 openPosition;
-    private Transform playerTransform;
+    private Collider col;
 
     void Start()
     {
         closedPosition = transform.localPosition;
         openPosition = closedPosition + openDirection * openDistance;
-        playerTransform = Camera.main.transform;
+        col = drawerCollider != null ? drawerCollider : GetComponent<Collider>();
     }
 
     void Update()
     {
-        float distance = Vector3.Distance(playerTransform.position, transform.position);
-
-        if (distance <= interactDistance)
-        {
-            if (interactUI != null)
-                interactUI.SetActive(true);
-
-            if (Input.GetKeyDown(KeyCode.E))
-                isOpen = !isOpen;
-        }
-        else
-        {
-            if (interactUI != null)
-                interactUI.SetActive(false);
-        }
-
-        // 서랍 움직임
         Vector3 targetPosition = isOpen ? openPosition : closedPosition;
-        transform.localPosition = Vector3.Lerp(
-            transform.localPosition,
-            targetPosition,
-            Time.deltaTime * openSpeed
-        );
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * openSpeed);
+
+        if (isOpen && col != null && !col.enabled)
+        {
+            bool anyItemActive = false;
+            foreach (ItemPickup item in drawerItems)
+            {
+                if (item != null && item.gameObject.activeSelf)
+                {
+                    anyItemActive = true;
+                    break;
+                }
+            }
+            if (!anyItemActive) col.enabled = true;
+        }
+    }
+
+    public void Interact()
+    {
+        if (isLooted && !isOpen) return;
+
+        isOpen = !isOpen;
+        if (col != null) col.enabled = !isOpen;
+
+        if (!isOpen && AllItemsLooted())
+            isLooted = true;
+    }
+
+    private bool AllItemsLooted()
+    {
+        if (drawerItems == null || drawerItems.Length == 0) return false;
+        foreach (ItemPickup item in drawerItems)
+            if (item != null && item.gameObject.activeSelf) return false;
+        return true;
     }
 }
