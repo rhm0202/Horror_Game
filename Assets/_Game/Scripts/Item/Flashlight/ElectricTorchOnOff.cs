@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class ElectricTorchOnOff : MonoBehaviour
 {
+	public static event System.Action<bool> OnFlashlightToggled;
 	[SerializeField] EmissionMaterialGlassTorchFadeOut _emissionMaterialFade;
 	BatteryPowerPickup _batteryPower;
 	//
@@ -71,11 +72,13 @@ public class ElectricTorchOnOff : MonoBehaviour
 		{
 			_flashLightOn = false;
 			ChooseLightCookie.SetUVMode(false);
+			OnFlashlightToggled?.Invoke(false);
 		}
 		else if (Input.GetKeyDown(_kCode) && _flashLightOn == false)
 		{
 			_flashLightOn = true;
 			GetComponent<ChooseLightCookie>()?.ResetToNormal();
+			OnFlashlightToggled?.Invoke(true);
 		}
 	}
 

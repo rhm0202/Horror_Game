@@ -1,0 +1,23 @@
+using UnityEngine;
+
+public class MenuController : MonoBehaviour
+{
+    [Header("엔딩 씬 전용")]
+    [SerializeField] GameObject clearScreen;
+    [SerializeField] GameObject gameOverScreen;
+
+    void Start()
+    {
+        if (clearScreen == null || gameOverScreen == null) return;
+
+        bool isGameOver = GameManager.LastState == GameManager.GameState.GameOver;
+        clearScreen.SetActive(!isGameOver);
+        gameOverScreen.SetActive(isGameOver);
+    }
+
+    // 버튼 콜백
+    public void OnStartGame()   => GameManager.Instance.StartGame();
+    public void OnRestart()     => GameManager.Instance.StartGame();
+    public void OnMainMenu()    => GameManager.Instance.GoToMainMenu();
+    public void OnQuit()        => Application.Quit();
+}
