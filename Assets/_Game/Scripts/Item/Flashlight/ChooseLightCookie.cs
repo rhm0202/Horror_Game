@@ -11,6 +11,16 @@ using UnityEngine;
 public class ChooseLightCookie : MonoBehaviour
 {
     public static event Action<bool> OnUVModeChanged;
+    public static void SetUVMode(bool active) => OnUVModeChanged?.Invoke(active);
+
+    public void ResetToNormal()
+    {
+        _scroolList = 0;
+        _thisLight.cookie = lightCookie[0];
+        if (lightColors.Count > 0)
+            _thisLight.color = lightColors[0];
+        OnUVModeChanged?.Invoke(false);
+    }
 
     public string chooseKeyForCookie = "R";
     private KeyCode _keyCode;
@@ -46,7 +56,7 @@ public class ChooseLightCookie : MonoBehaviour
 
     void ChooseCookie()
     {
-        if (Input.GetKeyDown(_keyCode))
+        if (Input.GetKeyDown(_keyCode) && GetComponent<ElectricTorchOnOff>().IsOn)
         {
             _scroolList += 1;
 

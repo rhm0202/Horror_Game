@@ -30,6 +30,7 @@ public class ElectricTorchOnOff : MonoBehaviour
 	[Space]
 	public float intensityLight = 2.5F;
 	private bool _flashLightOn = false;
+	public bool IsOn => _flashLightOn;
 	[SerializeField] float _lightTime = 0.05f;
 
 
@@ -69,12 +70,12 @@ public class ElectricTorchOnOff : MonoBehaviour
 		if (Input.GetKeyDown(_kCode) && _flashLightOn == true)
 		{
 			_flashLightOn = false;
-
+			ChooseLightCookie.SetUVMode(false);
 		}
 		else if (Input.GetKeyDown(_kCode) && _flashLightOn == false)
 		{
 			_flashLightOn = true;
-
+			GetComponent<ChooseLightCookie>()?.ResetToNormal();
 		}
 	}
 
