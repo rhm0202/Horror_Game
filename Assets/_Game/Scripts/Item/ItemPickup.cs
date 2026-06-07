@@ -15,6 +15,8 @@ public class ItemPickup : MonoBehaviour, IInteractable
         else
             Inventory.Instance.AddItem(item);
 
+            SFXManager.Instance.PlaySFX("item_get");
+
         gameObject.SetActive(false);
     }
 }
