@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class SafeInteractable : MonoBehaviour, IInteractable
+public class SafeInteractable : MonoBehaviour, IInteractable, IKeypadTarget
 {
     [Header("금고 설정")]
     [SerializeField] int[] correctSequence = { 1, 2, 3, 4, 5, 6 };
+    public int RequiredLength => correctSequence.Length;
 
     [Header("잠금 해제될 문")]
     [SerializeField] DoorInteraction linkedDoor;
