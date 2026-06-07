@@ -16,6 +16,8 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
+        if (cameraTransform == null) return;
+
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
         Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
 

@@ -4,16 +4,14 @@ using TMPro;
 
 public class SafeUI : MonoBehaviour
 {
-    [Header("입력 표시 (입력한 숫자 순서 표시)")]
     [SerializeField] TMP_Text inputDisplayText;
 
     private List<int> currentSequence = new List<int>();
-    private SafeInteractable currentSafe;
-    private const int RequiredCount = 6;
+    private IKeypadTarget currentTarget;
 
-    public void Open(SafeInteractable safe)
+    public void Open(IKeypadTarget target)
     {
-        currentSafe = safe;
+        currentTarget = target;
         Reset();
         gameObject.SetActive(true);
     }
@@ -23,16 +21,16 @@ public class SafeUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // 버튼 OnClick에서 호출 (1~9)
     public void OnNumberPressed(int number)
     {
-        if (currentSequence.Count >= RequiredCount) return;
+        if (currentTarget == null) return;
+        if (currentSequence.Count >= currentTarget.RequiredLength) return;
 
         currentSequence.Add(number);
         UpdateDisplay();
 
-        if (currentSequence.Count == RequiredCount)
-            currentSafe.TryUnlock(currentSequence.ToArray());
+        if (currentSequence.Count == currentTarget.RequiredLength)
+            currentTarget.TryUnlock(currentSequence.ToArray());
     }
 
     public void OnReset()
@@ -56,13 +54,8 @@ public class SafeUI : MonoBehaviour
     private void UpdateDisplay()
     {
         if (inputDisplayText == null) return;
-
-        if (currentSequence.Count == 0)
-        {
-            inputDisplayText.text = "- - - - - -";
-            return;
-        }
-
-        inputDisplayText.text = string.Join(" ", currentSequence);
+        inputDisplayText.text = currentSequence.Count == 0
+            ? "- - - - - -"
+            : string.Join(" ", currentSequence);
     }
 }

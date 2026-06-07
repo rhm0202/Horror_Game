@@ -23,6 +23,24 @@ public class UIManager : MonoBehaviour
     //         CloseJournal();
     // }
 
+    public bool IsUIOpen { get; private set; }
+
+    void OpenUI()
+    {
+        IsUIOpen = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    void CloseUI()
+    {
+        IsUIOpen = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     public void ShowMessage(string message)
     {
     }
@@ -73,16 +91,18 @@ public class UIManager : MonoBehaviour
     [Header("금고 UI")]
     [SerializeField] SafeUI safeUI;
 
-    public void ShowSafe(SafeInteractable safe)
+    public void ShowSafe(IKeypadTarget safe)
     {
         if (safeUI != null) safeUI.Open(safe);
         else Debug.Log("[금고] UI 열림");
+        OpenUI();
     }
 
     public void CloseSafe()
     {
         if (safeUI != null) safeUI.Close();
         else Debug.Log("[금고] UI 닫힘");
+        CloseUI();
     }
 
     public void OnSafeWrong()
