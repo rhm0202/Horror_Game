@@ -33,7 +33,5 @@ public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
 
         if (exitDoor != null)
             exitDoor.UnlockAndOpen();
-
-        GameManager.Instance.SetState(GameManager.GameState.Clear);
     }
 }
