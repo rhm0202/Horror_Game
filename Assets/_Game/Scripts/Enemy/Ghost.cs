@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public class GhostPatrol : MonoBehaviour
+public class Ghost : MonoBehaviour
 {
     private enum GhostState
     {
@@ -24,14 +25,20 @@ public class GhostPatrol : MonoBehaviour
 
     [Header("공격 설정")]
     [SerializeField] private float attackDistance = 1.2f;
+    [SerializeField] private float hitDistance = 2f;
     [SerializeField] private float attackCooldown = 2f;
+    [SerializeField] private float gameOverDelay = 0.5f;
 
     [Header("애니메이션")]
     [SerializeField] private Animator nurseAnimator;
 
     private GhostState currentState = GhostState.Patrol;
+    public bool IsAttacking => currentState == GhostState.Attack && attackTimer > 0f;
+    private SphereCollider detectionCollider;
+    private float baseDetectionRadius;
 
     private int currentWaypointIndex;
+    private int waypointDirection = 1;
     private float waitTimer;
     private float attackTimer;
 
@@ -47,6 +54,16 @@ public class GhostPatrol : MonoBehaviour
 
     private static readonly int AttackHash =
         Animator.StringToHash("Attack");
+
+    private void Awake()
+    {
+        detectionCollider = GetComponent<SphereCollider>();
+        if (detectionCollider != null)
+            baseDetectionRadius = detectionCollider.radius;
+
+        if (nurseAnimator == null)
+            nurseAnimator = GetComponentInChildren<Animator>();
+    }
 
     private void Start()
     {
@@ -113,6 +130,7 @@ public class GhostPatrol : MonoBehaviour
         if (playerInDetectionRange && !playerInSafeRoom)
         {
             currentState = GhostState.Chase;
+            SetDetectionRange(true);
             return;
         }
 
@@ -151,6 +169,7 @@ public class GhostPatrol : MonoBehaviour
         if (!playerInDetectionRange || playerInSafeRoom)
         {
             currentState = GhostState.Patrol;
+            SetDetectionRange(false);
             SetMovementAnimation(false, false);
             return;
         }
@@ -180,31 +199,29 @@ public class GhostPatrol : MonoBehaviour
     {
         SetMovementAnimation(false, false);
 
+        // 애니메이션 재생 중이면 제자리 대기
+        if (attackTimer > 0f) return;
+
         if (playerInSafeRoom || !playerInDetectionRange)
         {
             currentState = GhostState.Patrol;
+            SetDetectionRange(false);
+            return;
+        }
+
+        Vector3 flatPos = player.position;
+        flatPos.y = transform.position.y;
+        float dist = Vector3.Distance(transform.position, flatPos);
+
+        if (dist > attackDistance)
+        {
+            currentState = GhostState.Chase;
             return;
         }
 
         FaceTarget(player.position);
-
-        if (attackTimer <= 0f)
-        {
-            PlayAttack();
-            attackTimer = attackCooldown;
-
-            Debug.Log("플레이어 공격! 게임 오버 처리 위치");
-        }
-
-        float distanceToPlayer = Vector3.Distance(
-            transform.position,
-            player.position
-        );
-
-        if (distanceToPlayer > attackDistance)
-        {
-            currentState = GhostState.Chase;
-        }
+        PlayAttack();
+        attackTimer = attackCooldown;
     }
 
     private void MoveTowardsTarget(
@@ -260,8 +277,9 @@ public class GhostPatrol : MonoBehaviour
 
         if (waitTimer >= waitTime)
         {
-            currentWaypointIndex =
-                (currentWaypointIndex + 1) % waypoints.Length;
+            currentWaypointIndex += waypointDirection;
+            if (currentWaypointIndex >= waypoints.Length - 1 || currentWaypointIndex <= 0)
+                waypointDirection *= -1;
 
             isWaiting = false;
             waitTimer = 0f;
@@ -284,6 +302,23 @@ public class GhostPatrol : MonoBehaviour
     {
         nurseAnimator.ResetTrigger(AttackHash);
         nurseAnimator.SetTrigger(AttackHash);
+    }
+
+    private void SetDetectionRange(bool alerted)
+    {
+        if (detectionCollider != null)
+            detectionCollider.radius = alerted ? baseDetectionRadius * 2f : baseDetectionRadius;
+    }
+
+    public void OnAttackHit()
+    {
+        StartCoroutine(GameOverAfterAnimation());
+    }
+
+    private IEnumerator GameOverAfterAnimation()
+    {
+        yield return new WaitForSeconds(gameOverDelay);
+        GameManager.Instance.SetState(GameManager.GameState.GameOver);
     }
 
     private void OnTriggerEnter(Collider other)
