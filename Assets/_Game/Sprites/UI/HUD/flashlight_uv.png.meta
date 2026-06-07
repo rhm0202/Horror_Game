@@ -95,12 +95,34 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: flashlight_uv_3
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 39
+        width: 103
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d22eb5054710d4640b6c5bb7e99a7c7b
+      internalID: -1157069173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b06e42981283c1746badc3f7670f3a91
     internalID: 0
     vertices: []
     indices: 
@@ -108,8 +130,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      flashlight_uv_0: -1459264285
+      flashlight_uv_1: -1760048644
+      flashlight_uv_2: 7706361
+      flashlight_uv_3: -1157069173
+      flashlight_uv_4: -71175506
+      flashlight_uv_5: -2016053226
+      flashlight_uv_6: -717840729
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

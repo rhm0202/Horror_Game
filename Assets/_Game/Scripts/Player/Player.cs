@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (UIManager.Instance != null && UIManager.Instance.IsUIOpen) return;
         Move();
         Rotate();
         HandleFootstep();

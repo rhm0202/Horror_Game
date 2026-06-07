@@ -17,11 +17,69 @@ public class UIManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    void Update()
+    {
+        if (!IsUIOpen) return;
+        if (!Input.GetKeyDown(KeyCode.Escape)) return;
+
+        if (journalUI != null && journalUI.gameObject.activeSelf)
+            CloseJournal();
+        else if (safeUI != null && safeUI.gameObject.activeSelf)
+            CloseSafe();
+    }
+
     // void Update()
     // {
     //     if (journalPanel != null && journalPanel.activeSelf && Input.GetKeyDown(KeyCode.F))
     //         CloseJournal();
     // }
+
+    [Header("HUD")]
+    [SerializeField] GameObject hud;
+    [SerializeField] GameObject interactPrompt;
+    [SerializeField] GameObject itemPrompt;
+    [SerializeField] UnityEngine.UI.Text itemNameText;
+
+    public void ShowInteractPrompt()
+    {
+        if (IsUIOpen) return;
+        if (interactPrompt != null) interactPrompt.SetActive(true);
+        if (itemPrompt != null) itemPrompt.SetActive(false);
+    }
+
+    public void ShowItemPrompt(string itemName)
+    {
+        if (IsUIOpen) return;
+        if (itemPrompt != null) itemPrompt.SetActive(true);
+        if (itemNameText != null) itemNameText.text = itemName;
+        if (interactPrompt != null) interactPrompt.SetActive(false);
+    }
+
+    public void HideInteractPrompt()
+    {
+        if (interactPrompt != null) interactPrompt.SetActive(false);
+        if (itemPrompt != null) itemPrompt.SetActive(false);
+    }
+
+    public bool IsUIOpen { get; private set; }
+
+    void OpenUI()
+    {
+        IsUIOpen = true;
+        Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (hud != null) hud.SetActive(false);
+    }
+
+    void CloseUI()
+    {
+        IsUIOpen = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        if (hud != null) hud.SetActive(true);
+    }
 
     public void ShowMessage(string message)
     {
@@ -31,18 +89,19 @@ public class UIManager : MonoBehaviour
     {
     }
 
-    public void ShowJournal(string title, string content)
+    [Header("일지 UI")]
+    [SerializeField] JournalUI journalUI;
+
+    public void ShowJournal(string date, string page, string title, string content, string author)
     {
-        Debug.Log($"[일지] {title}\n{content}");
-        // journalTitleText.text = title;
-        // journalContentText.text = content;
-        // journalPanel.SetActive(true);
+        if (journalUI != null) journalUI.Open(date, page, title, content, author);
+        OpenUI();
     }
 
     public void CloseJournal()
     {
-        Debug.Log("[일지] 닫힘");
-        // journalPanel.SetActive(false);
+        if (journalUI != null) journalUI.Close();
+        CloseUI();
     }
 
     [Header("자물쇠 UI")]
@@ -73,16 +132,18 @@ public class UIManager : MonoBehaviour
     [Header("금고 UI")]
     [SerializeField] SafeUI safeUI;
 
-    public void ShowSafe(SafeInteractable safe)
+    public void ShowSafe(IKeypadTarget safe)
     {
         if (safeUI != null) safeUI.Open(safe);
         else Debug.Log("[금고] UI 열림");
+        OpenUI();
     }
 
     public void CloseSafe()
     {
         if (safeUI != null) safeUI.Close();
         else Debug.Log("[금고] UI 닫힘");
+        CloseUI();
     }
 
     public void OnSafeWrong()
