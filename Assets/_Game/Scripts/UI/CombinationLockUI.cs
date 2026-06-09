@@ -1,16 +1,37 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CombinationLockUI : MonoBehaviour
 {
-    [SerializeField] TMP_Text[] digitTexts;  // 숫자 텍스트 4개
+    [Header("숫자 표시")]
+    [SerializeField] TMP_Text[] digitTexts;
 
-    private int[] currentInput;
-    private CombinationLockInteractable currentLock;
+    [Header("버튼 (인덱스 순서: 0~3)")]
+    [SerializeField] Button[] upButtons;
+    [SerializeField] Button[] downButtons;
+
+    [Header("확인 버튼")]
+    [SerializeField] Button confirmButton;
+
+    int[] currentInput;
+    CombinationLockInteractable currentLock;
 
     void Awake()
     {
         currentInput = new int[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            int idx = i;
+            if (upButtons != null && i < upButtons.Length && upButtons[idx] != null)
+                upButtons[idx].onClick.AddListener(() => OnUp(idx));
+            if (downButtons != null && i < downButtons.Length && downButtons[idx] != null)
+                downButtons[idx].onClick.AddListener(() => OnDown(idx));
+        }
+
+        if (confirmButton != null)
+            confirmButton.onClick.AddListener(OnConfirm);
     }
 
     public void Open(CombinationLockInteractable lockTarget)
@@ -25,25 +46,25 @@ public class CombinationLockUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void OnUp(int index)
+    void OnUp(int index)
     {
         currentInput[index] = (currentInput[index] + 1) % 10;
         UpdateDisplay(index);
     }
 
-    public void OnDown(int index)
+    void OnDown(int index)
     {
         currentInput[index] = (currentInput[index] + 9) % 10;
         UpdateDisplay(index);
     }
 
-    public void OnConfirm()
+    void OnConfirm()
     {
         if (currentLock != null)
             currentLock.TryUnlock(currentInput);
     }
 
-    private void ResetDigits()
+    void ResetDigits()
     {
         for (int i = 0; i < currentInput.Length; i++)
         {
@@ -52,7 +73,7 @@ public class CombinationLockUI : MonoBehaviour
         }
     }
 
-    private void UpdateDisplay(int index)
+    void UpdateDisplay(int index)
     {
         if (digitTexts != null && index < digitTexts.Length && digitTexts[index] != null)
             digitTexts[index].text = currentInput[index].ToString();

@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FlashlightBattery : MonoBehaviour
+public class FlashlightUI : MonoBehaviour
 {
     [SerializeField] Image fillImage;
     [SerializeField] ElectricTorchOnOff flashlight;
+    [SerializeField] GameObject flashlightIcon;
+    [SerializeField] GameObject batteryBar;
     [SerializeField] float drainDuration = 120f;
 
-    CanvasGroup canvasGroup;
     float battery = 1f;
     bool isOn;
-    bool isPickedUp;
 
     void Start()
     {
-        canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        canvasGroup.alpha = 0f;
+        if (flashlightIcon != null) flashlightIcon.SetActive(false);
+        if (batteryBar != null) batteryBar.SetActive(false);
     }
 
     void OnEnable() => ElectricTorchOnOff.OnFlashlightToggled += HandleToggle;
@@ -25,10 +25,10 @@ public class FlashlightBattery : MonoBehaviour
 
     void Update()
     {
-        if (!isPickedUp && Inventory.Instance != null && Inventory.Instance.HasFlashlight)
+        if (Inventory.Instance != null && Inventory.Instance.HasFlashlight)
         {
-            isPickedUp = true;
-            canvasGroup.alpha = 1f;
+            if (flashlightIcon != null && !flashlightIcon.activeSelf) flashlightIcon.SetActive(true);
+            if (batteryBar != null && !batteryBar.activeSelf) batteryBar.SetActive(true);
         }
 
         if (!isOn || battery <= 0f) return;
