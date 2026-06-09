@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
 {
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "출구 키패드";
+
     [Header("비밀번호")]
     [SerializeField] int[] correctPassword;
     public int RequiredLength => correctPassword.Length;
@@ -10,6 +13,8 @@ public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
     [SerializeField] DoorInteraction exitDoor;
 
     private bool isUnlocked = false;
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {

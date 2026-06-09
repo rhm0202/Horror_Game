@@ -10,6 +10,8 @@ public class JournalInteractable : MonoBehaviour, IInteractable
     public string content = "";
     public string author = "";
 
+    public string GetPromptName() => string.IsNullOrEmpty(title) ? "일지" : $"일지: {title}";
+
     public void Interact()
     {
         UIManager.Instance.ShowJournal(date, page, title, content, author);

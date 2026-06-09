@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SafeInteractable : MonoBehaviour, IInteractable, IKeypadTarget
 {
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "보관함";
+
     [Header("금고 설정")]
     [SerializeField] int[] correctSequence = { 1, 2, 3, 4, 5, 6 };
     public int RequiredLength => correctSequence.Length;
@@ -10,6 +13,8 @@ public class SafeInteractable : MonoBehaviour, IInteractable, IKeypadTarget
     [SerializeField] DoorInteraction linkedDoor;
 
     private bool isUnlocked = false;
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {

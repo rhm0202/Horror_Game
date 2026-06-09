@@ -1,6 +1,5 @@
 using UnityEngine;
-// using UnityEngine.UI;
-// using TMPro;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -37,28 +36,20 @@ public class UIManager : MonoBehaviour
     [Header("HUD")]
     [SerializeField] GameObject hud;
     [SerializeField] GameObject interactPrompt;
-    [SerializeField] GameObject itemPrompt;
-    [SerializeField] UnityEngine.UI.Text itemNameText;
+    [SerializeField] TMP_Text interactKeyText;
+    [SerializeField] TMP_Text interactNameText;
 
-    public void ShowInteractPrompt()
+    public void ShowInteractPrompt(string name)
     {
         if (IsUIOpen) return;
         if (interactPrompt != null) interactPrompt.SetActive(true);
-        if (itemPrompt != null) itemPrompt.SetActive(false);
-    }
-
-    public void ShowItemPrompt(string itemName)
-    {
-        if (IsUIOpen) return;
-        if (itemPrompt != null) itemPrompt.SetActive(true);
-        if (itemNameText != null) itemNameText.text = itemName;
-        if (interactPrompt != null) interactPrompt.SetActive(false);
+        if (interactKeyText != null) interactKeyText.text = "[F]";
+        if (interactNameText != null) interactNameText.text = name;
     }
 
     public void HideInteractPrompt()
     {
         if (interactPrompt != null) interactPrompt.SetActive(false);
-        if (itemPrompt != null) itemPrompt.SetActive(false);
     }
 
     public bool IsUIOpen { get; private set; }

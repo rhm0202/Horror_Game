@@ -29,6 +29,10 @@ public class Ghost : MonoBehaviour
     [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private float gameOverDelay = 0.5f;
 
+    [Header("부적 설정")]
+    [SerializeField] private Item amuletItem;
+    [SerializeField] private float amuletStaggerTime = 2f;
+
     [Header("애니메이션")]
     [SerializeField] private Animator nurseAnimator;
 
@@ -45,6 +49,8 @@ public class Ghost : MonoBehaviour
     private bool isWaiting;
     private bool playerInDetectionRange;
     private bool playerInSafeRoom;
+    private bool isStaggered;
+    private bool isEnraged;
 
     private static readonly int IsMovingHash =
         Animator.StringToHash("IsMoving");
@@ -104,6 +110,8 @@ public class Ghost : MonoBehaviour
 
     private void Update()
     {
+        if (isStaggered) return;
+
         if (attackTimer > 0f)
         {
             attackTimer -= Time.deltaTime;
@@ -306,13 +314,47 @@ public class Ghost : MonoBehaviour
 
     private void SetDetectionRange(bool alerted)
     {
-        if (detectionCollider != null)
+        if (detectionCollider == null) return;
+        if (isEnraged)
+            detectionCollider.radius = baseDetectionRadius * 2f;
+        else
             detectionCollider.radius = alerted ? baseDetectionRadius * 2f : baseDetectionRadius;
     }
 
     public void OnAttackHit()
     {
-        StartCoroutine(GameOverAfterAnimation());
+        if (isStaggered)
+        {
+            Debug.Log("[Ghost] OnAttackHit 무시 - 이미 스태거 중");
+            return;
+        }
+
+        Debug.Log($"[Ghost] OnAttackHit 호출 | amuletItem={amuletItem} | Inventory={Inventory.Instance} | HasAmulet={Inventory.Instance?.HasItem(amuletItem)}");
+
+        if (amuletItem != null && Inventory.Instance != null && Inventory.Instance.HasItem(amuletItem))
+        {
+            Debug.Log("[Ghost] 부적 보호 발동 → 스태거 시작");
+            isStaggered = true;
+            Inventory.Instance.RemoveItem(amuletItem);
+            StartCoroutine(AmuletProtection());
+        }
+        else
+        {
+            Debug.Log("[Ghost] 부적 없음 → 게임오버");
+            StartCoroutine(GameOverAfterAnimation());
+        }
+    }
+
+    private IEnumerator AmuletProtection()
+    {
+        currentState = GhostState.Patrol;
+        SetMovementAnimation(false, false);
+
+        yield return new WaitForSeconds(amuletStaggerTime);
+
+        isStaggered = false;
+        isEnraged = true;
+        SetDetectionRange(false);
     }
 
     private IEnumerator GameOverAfterAnimation()

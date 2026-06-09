@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CombinationLockInteractable : MonoBehaviour, IInteractable
 {
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "자물쇠";
+
     [Header("자물쇠 설정")]
     [SerializeField] int[] correctCombination = { 0, 0, 0, 0 };
 
@@ -14,6 +17,8 @@ public class CombinationLockInteractable : MonoBehaviour, IInteractable
     [SerializeField] DoorInteraction linkedDoor;
 
     private bool isUnlocked = false;
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {
