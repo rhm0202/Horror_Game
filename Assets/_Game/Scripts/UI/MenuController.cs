@@ -13,6 +13,9 @@ public class MenuController : MonoBehaviour
         bool isGameOver = GameManager.LastState == GameManager.GameState.GameOver;
         clearScreen.SetActive(!isGameOver);
         gameOverScreen.SetActive(isGameOver);
+
+        if (isGameOver) SFXManager.Instance.PlaySFX("game_over");
+        else SFXManager.Instance.PlaySFX("game_clear");
     }
 
     // 버튼 콜백

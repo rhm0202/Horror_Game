@@ -3,7 +3,7 @@ using UnityEngine;
 public class LampController : MonoBehaviour
 {
     private Light[] lampLights;
-    private bool isOn = false;
+    // private bool isOn = false;
 
     [Header("Emission")]
     [SerializeField] private Renderer[] emissionRenderers;
@@ -24,16 +24,16 @@ public class LampController : MonoBehaviour
         TurnOff();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            if (isOn) TurnOff();
-            else TurnOn();
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Alpha0))
+    //     {
+    //         if (isOn) TurnOff();
+    //         else TurnOn();
 
-            isOn = !isOn;
-        }
-    }
+    //         isOn = !isOn;
+    //     }
+    // }
 
     public void TurnOn()
     {
