@@ -31,6 +31,5 @@ public class CardKeyDoor : MonoBehaviour, IInteractable
 
         isUnlocked = true;
         linkedDoor?.UnlockAndOpen();
-        gameObject.SetActive(false);
     }
 }

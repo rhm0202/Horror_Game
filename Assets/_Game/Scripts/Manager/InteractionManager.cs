@@ -36,6 +36,11 @@ public class InteractionManager : MonoBehaviour
             UIManager.Instance?.HideInteractPrompt();
         }
 
+        if (UIManager.Instance != null && UIManager.Instance.IsUIOpen)
+        {
+            UIManager.Instance.HideInteractPrompt();
+            return;
+        }
         if (!Input.GetKeyDown(KeyCode.F)) return;
         if (!hit)
         {

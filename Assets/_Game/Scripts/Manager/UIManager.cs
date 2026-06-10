@@ -56,9 +56,9 @@ public class UIManager : MonoBehaviour
         if (interactPrompt != null) interactPrompt.SetActive(false);
     }
 
-    public bool IsUIOpen { get; private set; }
+    public bool IsUIOpen { get; set; }
 
-    void OpenUI()
+    public void OpenUI()
     {
         IsUIOpen = true;
         Time.timeScale = 0f;
@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         if (hud != null) hud.SetActive(false);
     }
 
-    void CloseUI()
+    public void CloseUI()
     {
         IsUIOpen = false;
         Time.timeScale = 1f;
@@ -82,6 +82,14 @@ public class UIManager : MonoBehaviour
 
     public void UpdateInventoryUI()
     {
+    }
+
+    [Header("대사 UI")]
+    [SerializeField] DialogueUI dialogueUI;
+
+    public void ShowDialogue(string[] lines)
+    {
+        if (dialogueUI != null) dialogueUI.Play(lines);
     }
 
     [Header("일지 UI")]

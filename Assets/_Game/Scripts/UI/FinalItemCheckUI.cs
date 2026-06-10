@@ -86,6 +86,7 @@ public class FinalItemCheckUI : MonoBehaviour
 
     public void Open()
     {
+        gameObject.SetActive(true);
         if (!initialized)
         {
             checkedCount = 0;
@@ -94,7 +95,6 @@ public class FinalItemCheckUI : MonoBehaviour
             if (buttonOff != null) buttonOff.SetActive(true);
             initialized = true;
         }
-        gameObject.SetActive(true);
     }
 
     public void Close()
