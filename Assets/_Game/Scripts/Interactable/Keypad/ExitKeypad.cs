@@ -18,6 +18,7 @@ public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
 
     public void Interact()
     {
+        if (!enabled) return;
         if (isUnlocked) return;
         UIManager.Instance.ShowSafe(this);
     }

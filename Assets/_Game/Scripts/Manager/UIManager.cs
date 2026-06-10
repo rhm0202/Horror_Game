@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
             CloseSafe();
         else if (combinationLockUI != null && combinationLockUI.gameObject.activeSelf)
             CloseCombinationLock();
+        else if (finalItemCheckUI != null && finalItemCheckUI.gameObject.activeSelf)
+            CloseFinalItemCheck();
     }
 
     // void Update()
@@ -85,9 +87,9 @@ public class UIManager : MonoBehaviour
     [Header("일지 UI")]
     [SerializeField] JournalUI journalUI;
 
-    public void ShowJournal(string date, string page, string title, string content, string author)
+    public void ShowJournal(string date, string title, string[] pages, string author)
     {
-        if (journalUI != null) journalUI.Open(date, page, title, content, author);
+        if (journalUI != null) journalUI.Open(date, title, pages, author);
         OpenUI();
     }
 
@@ -145,5 +147,20 @@ public class UIManager : MonoBehaviour
     {
         if (safeUI != null) safeUI.OnWrongFeedback();
         else Debug.Log("[금고] 틀림");
+    }
+
+    [Header("최종 아이템 체크 UI")]
+    [SerializeField] FinalItemCheckUI finalItemCheckUI;
+
+    public void ShowFinalItemCheck()
+    {
+        if (finalItemCheckUI != null) finalItemCheckUI.Open();
+        OpenUI();
+    }
+
+    public void CloseFinalItemCheck()
+    {
+        if (finalItemCheckUI != null) finalItemCheckUI.Close();
+        CloseUI();
     }
 }
