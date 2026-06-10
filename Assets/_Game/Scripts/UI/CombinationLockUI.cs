@@ -14,13 +14,11 @@ public class CombinationLockUI : MonoBehaviour
     [Header("확인 버튼")]
     [SerializeField] Button confirmButton;
 
-    int[] currentInput;
+    int[] currentInput = new int[4];
     CombinationLockInteractable currentLock;
 
     void Awake()
     {
-        currentInput = new int[4];
-
         for (int i = 0; i < 4; i++)
         {
             int idx = i;

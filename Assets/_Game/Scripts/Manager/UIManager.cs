@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
             CloseJournal();
         else if (safeUI != null && safeUI.gameObject.activeSelf)
             CloseSafe();
+        else if (combinationLockUI != null && combinationLockUI.gameObject.activeSelf)
+            CloseCombinationLock();
     }
 
     // void Update()
@@ -104,6 +106,7 @@ public class UIManager : MonoBehaviour
             combinationLockUI.Open(lockTarget);
         else
             Debug.Log("[자물쇠] UI 열림");
+        OpenUI();
     }
 
     public void CloseCombinationLock()
@@ -112,6 +115,7 @@ public class UIManager : MonoBehaviour
             combinationLockUI.Close();
         else
             Debug.Log("[자물쇠] UI 닫힘");
+        CloseUI();
     }
 
     public void OnCombinationWrong()
