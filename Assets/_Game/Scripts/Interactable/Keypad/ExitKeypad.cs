@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
+{
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "출구 키패드";
+
+    [Header("비밀번호")]
+    [SerializeField] int[] correctPassword;
+    public int RequiredLength => correctPassword.Length;
+
+    [Header("열릴 문")]
+    [SerializeField] DoorInteraction exitDoor;
+
+    [Header("전력 없을 때 대사")]
+    [SerializeField] string noPowerMessage = "전력이 들어오지 않는다.";
+
+    private bool isUnlocked = false;
+
+    public string GetPromptName() => promptName;
+
+    public void Interact()
+    {
+        if (!enabled)
+        {
+            UIManager.Instance.ShowDialogue(new string[] { noPowerMessage });
+            return;
+        }
+        if (isUnlocked) return;
+        UIManager.Instance.ShowSafe(this);
+    }
+
+    public void TryUnlock(int[] input)
+    {
+        for (int i = 0; i < correctPassword.Length; i++)
+        {
+            if (input[i] != correctPassword[i])
+            {
+                UIManager.Instance.OnSafeWrong();
+                return;
+            }
+        }
+
+        isUnlocked = true;
+        UIManager.Instance.CloseSafe();
+
+        if (exitDoor != null)
+            exitDoor.UnlockAndOpen();
+    }
+}

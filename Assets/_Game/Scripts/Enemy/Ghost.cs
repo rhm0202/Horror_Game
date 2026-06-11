@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Ghost : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class Ghost : MonoBehaviour
     [SerializeField] private float attackCooldown = 2f;
     [SerializeField] private float gameOverDelay = 0.5f;
 
+    [Header("부적 설정")]
+    [SerializeField] private Item amuletItem;
+    [SerializeField] private float amuletStaggerTime = 5f;
+
     [Header("애니메이션")]
     [SerializeField] private Animator nurseAnimator;
 
@@ -42,9 +47,13 @@ public class Ghost : MonoBehaviour
     private float waitTimer;
     private float attackTimer;
 
+    private NavMeshAgent agent;
+
     private bool isWaiting;
     private bool playerInDetectionRange;
     private bool playerInSafeRoom;
+    private bool isStaggered;
+    private bool isEnraged;
 
     private static readonly int IsMovingHash =
         Animator.StringToHash("IsMoving");
@@ -57,6 +66,7 @@ public class Ghost : MonoBehaviour
 
     private void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
         detectionCollider = GetComponent<SphereCollider>();
         if (detectionCollider != null)
             baseDetectionRadius = detectionCollider.radius;
@@ -102,12 +112,20 @@ public class Ghost : MonoBehaviour
         SetMovementAnimation(false, false);
     }
 
+    [Header("애니메이션 속도 보정")]
+    [SerializeField] private float walkAnimSpeed = 1f;
+    [SerializeField] private float runAnimSpeed = 1f;
+
     private void Update()
     {
+        if (isStaggered) return;
+
         if (attackTimer > 0f)
         {
             attackTimer -= Time.deltaTime;
         }
+
+        nurseAnimator.speed = currentState == GhostState.Chase ? runAnimSpeed : walkAnimSpeed;
 
         switch (currentState)
         {
@@ -234,13 +252,9 @@ public class Ghost : MonoBehaviour
         waitTimer = 0f;
 
         SetMovementAnimation(true, isRunning);
-        FaceTarget(targetPosition);
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPosition,
-            speed * Time.deltaTime
-        );
+        agent.speed = speed;
+        agent.SetDestination(targetPosition);
     }
 
     private void FaceTarget(Vector3 targetPosition)
@@ -291,6 +305,7 @@ public class Ghost : MonoBehaviour
         bool isRunning
     )
     {
+        agent.isStopped = !isMoving;
         nurseAnimator.SetBool(IsMovingHash, isMoving);
         nurseAnimator.SetBool(
             IsRunningHash,
@@ -298,21 +313,69 @@ public class Ghost : MonoBehaviour
         );
     }
 
+    [Header("공격 히트박스 타이밍 (30fps 기준)")]
+    [SerializeField] private int hitboxStartFrame = 12;
+    [SerializeField] private int hitboxEndFrame = 40;
+    [SerializeField] private float animFPS = 30f;
+    [SerializeField] private AttackHitbox attackHitbox;
+
     private void PlayAttack()
     {
         nurseAnimator.ResetTrigger(AttackHash);
         nurseAnimator.SetTrigger(AttackHash);
+        StartCoroutine(HitboxRoutine());
+    }
+
+    private IEnumerator HitboxRoutine()
+    {
+        yield return new WaitForSeconds(hitboxStartFrame / animFPS);
+        if (attackHitbox != null) attackHitbox.EnableHitbox();
+        yield return new WaitForSeconds((hitboxEndFrame - hitboxStartFrame) / animFPS);
+        if (attackHitbox != null) attackHitbox.DisableHitbox();
     }
 
     private void SetDetectionRange(bool alerted)
     {
-        if (detectionCollider != null)
+        if (detectionCollider == null) return;
+        if (isEnraged)
+            detectionCollider.radius = baseDetectionRadius * 2f;
+        else
             detectionCollider.radius = alerted ? baseDetectionRadius * 2f : baseDetectionRadius;
     }
 
     public void OnAttackHit()
     {
-        StartCoroutine(GameOverAfterAnimation());
+        if (isStaggered)
+        {
+            Debug.Log("[Ghost] OnAttackHit 무시 - 이미 스태거 중");
+            return;
+        }
+
+        Debug.Log($"[Ghost] OnAttackHit 호출 | amuletItem={amuletItem} | Inventory={Inventory.Instance} | HasAmulet={Inventory.Instance?.HasItem(amuletItem)}");
+
+        if (amuletItem != null && Inventory.Instance != null && Inventory.Instance.HasItem(amuletItem))
+        {
+            isStaggered = true;
+            Inventory.Instance.RemoveItem(amuletItem);
+            UIManager.Instance.ShowDialogue(new string[] { "...부적이 사라진 것 같다." });
+            StartCoroutine(AmuletProtection());
+        }
+        else
+        {
+            StartCoroutine(GameOverAfterAnimation());
+        }
+    }
+
+    private IEnumerator AmuletProtection()
+    {
+        currentState = GhostState.Patrol;
+        SetMovementAnimation(false, false);
+
+        yield return new WaitForSeconds(amuletStaggerTime);
+
+        isStaggered = false;
+        isEnraged = true;
+        SetDetectionRange(false);
     }
 
     private IEnumerator GameOverAfterAnimation()

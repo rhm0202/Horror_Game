@@ -21,16 +21,35 @@ public class InteractionManager : MonoBehaviour
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
         Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
 
+        bool hit = Physics.Raycast(ray, out RaycastHit hitInfo, interactRange, interactableLayer);
+        IInteractable interactable = hit ? hitInfo.collider.GetComponentInParent<IInteractable>() : null;
+
+        if (interactable != null)
+        {
+            string name = interactable is ItemPickup pickup
+                ? pickup.GetItemName()
+                : interactable.GetPromptName();
+            UIManager.Instance?.ShowInteractPrompt(name);
+        }
+        else
+        {
+            UIManager.Instance?.HideInteractPrompt();
+        }
+
+        if (UIManager.Instance != null && UIManager.Instance.IsUIOpen)
+        {
+            UIManager.Instance.HideInteractPrompt();
+            return;
+        }
         if (!Input.GetKeyDown(KeyCode.F)) return;
-        if (!Physics.Raycast(ray, out RaycastHit hit, interactRange, interactableLayer))
+        if (!hit)
         {
             Debug.Log("[InteractionManager] 레이캐스트 미스");
             return;
         }
 
-        Debug.Log($"[InteractionManager] 레이캐스트 히트: {hit.collider.gameObject.name} / 레이어: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+        Debug.Log($"[InteractionManager] 레이캐스트 히트: {hitInfo.collider.gameObject.name} / 레이어: {LayerMask.LayerToName(hitInfo.collider.gameObject.layer)}");
 
-        IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
         if (interactable != null)
             interactable.Interact();
         else

@@ -56,6 +56,7 @@ public class ChooseLightCookie : MonoBehaviour
 
     void ChooseCookie()
     {
+        if (UIManager.Instance != null && UIManager.Instance.IsUIOpen) return;
         if (Input.GetKeyDown(_keyCode) && GetComponent<ElectricTorchOnOff>().IsOn)
         {
             _scroolList += 1;

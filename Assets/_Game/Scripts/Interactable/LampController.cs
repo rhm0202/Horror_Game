@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class LampController : MonoBehaviour
 {
-    // 모든 Light 자동 수집
     private Light[] lampLights;
-
     private bool isOn = false;
 
     [Header("Emission")]
     [SerializeField] private Renderer[] emissionRenderers;
-
     [SerializeField] private Color emissionColor = Color.white;
     [SerializeField] private float emissionIntensity = 3f;
 
     private void Awake()
     {
-        // 자식 포함 모든 Light 가져오기
         lampLights = GetComponentsInChildren<Light>();
+
+        // Renderer 자동 수집 (인스펙터에 없으면 자동으로)
+        if (emissionRenderers == null || emissionRenderers.Length == 0)
+            emissionRenderers = GetComponentsInChildren<Renderer>();
     }
 
     private void Start()
@@ -24,54 +24,50 @@ public class LampController : MonoBehaviour
         TurnOff();
     }
 
-    // private void Update()
-    // {
-    //     // 🔥 숫자 0 키 누르면 토글
-    //     if (Input.GetKeyDown(KeyCode.Alpha0))
-    //     {
-    //         if (isOn)
-    //             TurnOff();
-    //         else
-    //             TurnOn();
-
-    //         isOn = !isOn;
-    //     }
-    // }
-
-    // 🔆 ON
-    public void TurnOn()
+    private void Update()
     {
-        foreach (Light l in lampLights)
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            if (l != null)
-                l.enabled = true;
-        }
+            if (isOn) TurnOff();
+            else TurnOn();
 
-        foreach (Renderer renderer in emissionRenderers)
-        {
-            Material mat = renderer.material;
-
-            mat.EnableKeyword("_EMISSION");
-            mat.SetColor("_EmissionColor",
-                emissionColor * emissionIntensity);
+            isOn = !isOn;
         }
     }
 
-    // 🌑 OFF
-    public void TurnOff()
+    public void TurnOn()
     {
         foreach (Light l in lampLights)
-        {
-            if (l != null)
-                l.enabled = false;
-        }
+            if (l != null) l.enabled = true;
 
         foreach (Renderer renderer in emissionRenderers)
         {
-            Material mat = renderer.material;
+            if (renderer == null) continue;
 
-            mat.SetColor("_EmissionColor", Color.black);
-            mat.DisableKeyword("_EMISSION");
+            Material mat = renderer.sharedMaterial;
+            mat.SetFloat("_EmissionEnabled", 1f);
+            mat.EnableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", emissionColor * emissionIntensity);
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
         }
+    }
+
+    public void TurnOff()
+    {
+        foreach (Light l in lampLights)
+            if (l != null) l.enabled = false;
+
+        foreach (Renderer renderer in emissionRenderers)
+        {
+            if (renderer == null) continue;
+
+            Material mat = renderer.sharedMaterial;
+            mat.SetFloat("_EmissionEnabled", 0f);
+            mat.DisableKeyword("_EMISSION");
+            mat.SetColor("_EmissionColor", Color.black);
+            mat.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+        }
+
+        DynamicGI.UpdateEnvironment();
     }
 }

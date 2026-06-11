@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemName: "\uBD80\uC801"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 442934253, guid: 5fd997216eaa8f14e8c45e79b16e35aa, type: 3}
   isFlashlight: 0

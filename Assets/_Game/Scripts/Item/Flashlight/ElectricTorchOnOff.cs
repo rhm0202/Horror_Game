@@ -38,6 +38,8 @@ public class ElectricTorchOnOff : MonoBehaviour
 	private void Awake()
     {
 		_batteryPower = FindObjectOfType<BatteryPowerPickup>();
+		var light = GetComponent<Light>();
+		if (light != null) light.intensity = 0f;
 	}
     void Start()
 	{
@@ -64,9 +66,18 @@ public class ElectricTorchOnOff : MonoBehaviour
         }
 	}
 
+	public void ForceOff()
+	{
+		if (!_flashLightOn) return;
+		_flashLightOn = false;
+		ChooseLightCookie.SetUVMode(false);
+		OnFlashlightToggled?.Invoke(false);
+	}
+
 	void InputKey()
     {
 		if (!Inventory.Instance.HasFlashlight) return;
+		if (UIManager.Instance != null && UIManager.Instance.IsUIOpen) return;
 
 		if (Input.GetKeyDown(_kCode) && _flashLightOn == true)
 		{
