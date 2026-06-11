@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Ghost : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class Ghost : MonoBehaviour
     private float waitTimer;
     private float attackTimer;
 
+    private NavMeshAgent agent;
+
     private bool isWaiting;
     private bool playerInDetectionRange;
     private bool playerInSafeRoom;
@@ -63,6 +66,7 @@ public class Ghost : MonoBehaviour
 
     private void Awake()
     {
+        agent = GetComponent<NavMeshAgent>();
         detectionCollider = GetComponent<SphereCollider>();
         if (detectionCollider != null)
             baseDetectionRadius = detectionCollider.radius;
@@ -108,6 +112,10 @@ public class Ghost : MonoBehaviour
         SetMovementAnimation(false, false);
     }
 
+    [Header("애니메이션 속도 보정")]
+    [SerializeField] private float baseAnimSpeed = 1f;
+    [SerializeField] private float animSpeedMultiplier = 1f;
+
     private void Update()
     {
         if (isStaggered) return;
@@ -116,6 +124,11 @@ public class Ghost : MonoBehaviour
         {
             attackTimer -= Time.deltaTime;
         }
+
+        float velocity = agent.velocity.magnitude;
+        nurseAnimator.speed = velocity > 0.1f
+            ? baseAnimSpeed + velocity * animSpeedMultiplier
+            : 1f;
 
         switch (currentState)
         {
@@ -242,13 +255,9 @@ public class Ghost : MonoBehaviour
         waitTimer = 0f;
 
         SetMovementAnimation(true, isRunning);
-        FaceTarget(targetPosition);
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPosition,
-            speed * Time.deltaTime
-        );
+        agent.speed = speed;
+        agent.SetDestination(targetPosition);
     }
 
     private void FaceTarget(Vector3 targetPosition)
@@ -299,6 +308,7 @@ public class Ghost : MonoBehaviour
         bool isRunning
     )
     {
+        agent.isStopped = !isMoving;
         nurseAnimator.SetBool(IsMovingHash, isMoving);
         nurseAnimator.SetBool(
             IsRunningHash,
