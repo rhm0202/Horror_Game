@@ -113,8 +113,8 @@ public class Ghost : MonoBehaviour
     }
 
     [Header("애니메이션 속도 보정")]
-    [SerializeField] private float baseAnimSpeed = 1f;
-    [SerializeField] private float animSpeedMultiplier = 1f;
+    [SerializeField] private float walkAnimSpeed = 1f;
+    [SerializeField] private float runAnimSpeed = 1f;
 
     private void Update()
     {
@@ -125,10 +125,7 @@ public class Ghost : MonoBehaviour
             attackTimer -= Time.deltaTime;
         }
 
-        float velocity = agent.velocity.magnitude;
-        nurseAnimator.speed = velocity > 0.1f
-            ? baseAnimSpeed + velocity * animSpeedMultiplier
-            : 1f;
+        nurseAnimator.speed = currentState == GhostState.Chase ? runAnimSpeed : walkAnimSpeed;
 
         switch (currentState)
         {
@@ -316,10 +313,25 @@ public class Ghost : MonoBehaviour
         );
     }
 
+    [Header("공격 히트박스 타이밍 (30fps 기준)")]
+    [SerializeField] private int hitboxStartFrame = 12;
+    [SerializeField] private int hitboxEndFrame = 40;
+    [SerializeField] private float animFPS = 30f;
+    [SerializeField] private AttackHitbox attackHitbox;
+
     private void PlayAttack()
     {
         nurseAnimator.ResetTrigger(AttackHash);
         nurseAnimator.SetTrigger(AttackHash);
+        StartCoroutine(HitboxRoutine());
+    }
+
+    private IEnumerator HitboxRoutine()
+    {
+        yield return new WaitForSeconds(hitboxStartFrame / animFPS);
+        if (attackHitbox != null) attackHitbox.EnableHitbox();
+        yield return new WaitForSeconds((hitboxEndFrame - hitboxStartFrame) / animFPS);
+        if (attackHitbox != null) attackHitbox.DisableHitbox();
     }
 
     private void SetDetectionRange(bool alerted)
@@ -367,9 +379,14 @@ public class Ghost : MonoBehaviour
         SetDetectionRange(false);
     }
 
+    [Header("사망 대사")]
+    [SerializeField] private string deathMessage = "...";
+
     private IEnumerator GameOverAfterAnimation()
     {
         yield return new WaitForSeconds(gameOverDelay);
+        UIManager.Instance.ShowDialogue(new string[] { deathMessage });
+        yield return new WaitUntil(() => !UIManager.Instance.IsUIOpen);
         GameManager.Instance.SetState(GameManager.GameState.GameOver);
     }
 
