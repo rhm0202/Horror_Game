@@ -21,6 +21,11 @@ public class MenuController : MonoBehaviour
 
         if (!isGameOver && timeText != null)
             timeText.text = GameManager.GetFormattedTime();
+
+        if (isGameOver)
+            SFXManager.Instance.PlaySFX("game_over");
+        else
+            SFXManager.Instance.PlaySFX("game_clear");
     }
 
     // 버튼 콜백

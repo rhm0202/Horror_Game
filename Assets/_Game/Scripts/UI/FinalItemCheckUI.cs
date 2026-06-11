@@ -22,8 +22,11 @@ public class FinalItemCheckUI : MonoBehaviour
     [SerializeField] Button finalButton;
     [SerializeField] GameObject buttonOff;
 
-    [Header("복도 광원")]
-    [SerializeField] Light[] corridorLights;
+    // [Header("복도 광원")]
+    // [SerializeField] Light[] corridorLights;
+
+    [Header("복도 램프 컨트롤러")]          // ← 이것만 추가
+    [SerializeField] LampController[] corridorLampControllers;
 
     [Header("탈출구 키패드")]
     [SerializeField] ExitKeypad exitKeypad;
@@ -77,8 +80,11 @@ public class FinalItemCheckUI : MonoBehaviour
 
     void OnFinalButtonClicked()
     {
-        foreach (var light in corridorLights)
-            if (light != null) light.enabled = true;
+        // foreach (var light in corridorLights)
+        //     if (light != null) light.enabled = true;
+
+        foreach (var lamp in corridorLampControllers) 
+            if (lamp != null) lamp.TurnOn();
 
         if (exitKeypad != null) exitKeypad.enabled = true;
 
