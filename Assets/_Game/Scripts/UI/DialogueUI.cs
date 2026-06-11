@@ -13,21 +13,24 @@ public class DialogueUI : MonoBehaviour
     bool isTyping = false;
     bool advance = false;
     bool skip = false;
+    bool playInitiated = false;
 
     void Start()
     {
-        if (UIManager.Instance != null) UIManager.Instance.IsUIOpen = true;
+        if (playInitiated) return;
+        if (UIManager.Instance != null) { UIManager.Instance.IsUIOpen = true; UIManager.Instance.SetHUD(false); }
         StartCoroutine(PlayDialogue());
     }
 
     public void Play(string[] newLines)
     {
         StopAllCoroutines();
+        playInitiated = true;
         lines = newLines;
         isTyping = false;
         advance = false;
         skip = false;
-        if (UIManager.Instance != null) UIManager.Instance.IsUIOpen = true;
+        if (UIManager.Instance != null) { UIManager.Instance.IsUIOpen = true; UIManager.Instance.SetHUD(false); }
         gameObject.SetActive(true);
         StartCoroutine(PlayDialogue());
     }
@@ -51,7 +54,7 @@ public class DialogueUI : MonoBehaviour
             yield return new WaitUntil(() => advance);
         }
 
-        if (UIManager.Instance != null) UIManager.Instance.IsUIOpen = false;
+        if (UIManager.Instance != null) { UIManager.Instance.IsUIOpen = false; UIManager.Instance.SetHUD(true); }
         gameObject.SetActive(false);
     }
 

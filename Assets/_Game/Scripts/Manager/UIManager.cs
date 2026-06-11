@@ -16,8 +16,17 @@ public class UIManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    [Header("인벤토리 UI")]
+    [SerializeField] GameObject inventoryPanel;
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I) && !IsUIOpen)
+        {
+            if (inventoryPanel != null)
+                inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+        }
+
         if (!IsUIOpen) return;
         if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
@@ -74,6 +83,11 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         if (hud != null) hud.SetActive(true);
+    }
+
+    public void SetHUD(bool active)
+    {
+        if (hud != null) hud.SetActive(active);
     }
 
     public void ShowMessage(string message)

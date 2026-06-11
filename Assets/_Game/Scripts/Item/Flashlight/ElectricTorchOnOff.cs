@@ -38,6 +38,8 @@ public class ElectricTorchOnOff : MonoBehaviour
 	private void Awake()
     {
 		_batteryPower = FindObjectOfType<BatteryPowerPickup>();
+		var light = GetComponent<Light>();
+		if (light != null) light.intensity = 0f;
 	}
     void Start()
 	{
