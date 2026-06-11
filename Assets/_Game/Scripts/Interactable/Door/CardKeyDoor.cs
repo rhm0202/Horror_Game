@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CardKeyDoor : MonoBehaviour, IInteractable
 {
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "카드키 문";
+
     [Header("카드키 설정")]
     [SerializeField] Item requiredCardKey;
 
@@ -9,6 +12,8 @@ public class CardKeyDoor : MonoBehaviour, IInteractable
     [SerializeField] DoorInteraction linkedDoor;
 
     private bool isUnlocked = false;
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {
@@ -26,6 +31,5 @@ public class CardKeyDoor : MonoBehaviour, IInteractable
 
         isUnlocked = true;
         linkedDoor?.UnlockAndOpen();
-        gameObject.SetActive(false);
     }
 }

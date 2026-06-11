@@ -6,6 +6,9 @@ public class DoorInteraction : MonoBehaviour, IInteractable
     public float openAngle = 90f;
     public float openSpeed = 3f;
 
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "문";
+
     [Header("잠금 설정")]
     public bool isLocked = false;
     public Item requiredKey;
@@ -25,6 +28,8 @@ public class DoorInteraction : MonoBehaviour, IInteractable
         Quaternion targetRotation = isOpen ? openRotation : closedRotation;
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * openSpeed);
     }
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {

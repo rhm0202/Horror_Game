@@ -64,6 +64,14 @@ public class ElectricTorchOnOff : MonoBehaviour
         }
 	}
 
+	public void ForceOff()
+	{
+		if (!_flashLightOn) return;
+		_flashLightOn = false;
+		ChooseLightCookie.SetUVMode(false);
+		OnFlashlightToggled?.Invoke(false);
+	}
+
 	void InputKey()
     {
 		if (!Inventory.Instance.HasFlashlight) return;

@@ -1,13 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class SafeUI : MonoBehaviour
 {
+    [Header("숫자 표시")]
     [SerializeField] TMP_Text inputDisplayText;
 
-    private List<int> currentSequence = new List<int>();
-    private IKeypadTarget currentTarget;
+    [Header("버튼 (인덱스 = 숫자값, 0~9)")]
+    [SerializeField] Button[] numberButtons;
+
+    [Header("리셋 버튼")]
+    [SerializeField] Button resetButton;
+
+    List<int> currentSequence = new List<int>();
+    IKeypadTarget currentTarget;
+
+    void Awake()
+    {
+        for (int i = 0; i < numberButtons.Length; i++)
+        {
+            int num = i;
+            if (numberButtons[num] != null)
+                numberButtons[num].onClick.AddListener(() => OnNumberPressed(num));
+        }
+
+        if (resetButton != null)
+            resetButton.onClick.AddListener(OnReset);
+    }
 
     public void Open(IKeypadTarget target)
     {
@@ -21,7 +42,7 @@ public class SafeUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void OnNumberPressed(int number)
+    void OnNumberPressed(int number)
     {
         if (currentTarget == null) return;
         if (currentSequence.Count >= currentTarget.RequiredLength) return;
@@ -33,7 +54,7 @@ public class SafeUI : MonoBehaviour
             currentTarget.TryUnlock(currentSequence.ToArray());
     }
 
-    public void OnReset()
+    void OnReset()
     {
         Reset();
     }
@@ -45,13 +66,13 @@ public class SafeUI : MonoBehaviour
             inputDisplayText.text = "틀렸습니다";
     }
 
-    private void Reset()
+    void Reset()
     {
         currentSequence.Clear();
         UpdateDisplay();
     }
 
-    private void UpdateDisplay()
+    void UpdateDisplay()
     {
         if (inputDisplayText == null) return;
         inputDisplayText.text = currentSequence.Count == 0

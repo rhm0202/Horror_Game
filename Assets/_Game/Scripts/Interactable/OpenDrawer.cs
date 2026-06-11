@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class OpenDrawer : MonoBehaviour, IInteractable
 {
+    [Header("프롬프트")]
+    [SerializeField] string promptName = "서랍";
+
     [Header("서랍 설정")]
     public float openDistance = 0.4f;
     public float openSpeed = 3f;
@@ -47,6 +50,8 @@ public class OpenDrawer : MonoBehaviour, IInteractable
             if (!anyItemActive) col.enabled = true;
         }
     }
+
+    public string GetPromptName() => promptName;
 
     public void Interact()
     {

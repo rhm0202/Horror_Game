@@ -1,6 +1,5 @@
 using UnityEngine;
-// using UnityEngine.UI;
-// using TMPro;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -26,6 +25,10 @@ public class UIManager : MonoBehaviour
             CloseJournal();
         else if (safeUI != null && safeUI.gameObject.activeSelf)
             CloseSafe();
+        else if (combinationLockUI != null && combinationLockUI.gameObject.activeSelf)
+            CloseCombinationLock();
+        else if (finalItemCheckUI != null && finalItemCheckUI.gameObject.activeSelf)
+            CloseFinalItemCheck();
     }
 
     // void Update()
@@ -37,33 +40,25 @@ public class UIManager : MonoBehaviour
     [Header("HUD")]
     [SerializeField] GameObject hud;
     [SerializeField] GameObject interactPrompt;
-    [SerializeField] GameObject itemPrompt;
-    [SerializeField] UnityEngine.UI.Text itemNameText;
+    [SerializeField] TMP_Text interactKeyText;
+    [SerializeField] TMP_Text interactNameText;
 
-    public void ShowInteractPrompt()
+    public void ShowInteractPrompt(string name)
     {
         if (IsUIOpen) return;
         if (interactPrompt != null) interactPrompt.SetActive(true);
-        if (itemPrompt != null) itemPrompt.SetActive(false);
-    }
-
-    public void ShowItemPrompt(string itemName)
-    {
-        if (IsUIOpen) return;
-        if (itemPrompt != null) itemPrompt.SetActive(true);
-        if (itemNameText != null) itemNameText.text = itemName;
-        if (interactPrompt != null) interactPrompt.SetActive(false);
+        if (interactKeyText != null) interactKeyText.text = "[F]";
+        if (interactNameText != null) interactNameText.text = name;
     }
 
     public void HideInteractPrompt()
     {
         if (interactPrompt != null) interactPrompt.SetActive(false);
-        if (itemPrompt != null) itemPrompt.SetActive(false);
     }
 
-    public bool IsUIOpen { get; private set; }
+    public bool IsUIOpen { get; set; }
 
-    void OpenUI()
+    public void OpenUI()
     {
         IsUIOpen = true;
         Time.timeScale = 0f;
@@ -72,7 +67,7 @@ public class UIManager : MonoBehaviour
         if (hud != null) hud.SetActive(false);
     }
 
-    void CloseUI()
+    public void CloseUI()
     {
         IsUIOpen = false;
         Time.timeScale = 1f;
@@ -89,12 +84,20 @@ public class UIManager : MonoBehaviour
     {
     }
 
+    [Header("대사 UI")]
+    [SerializeField] DialogueUI dialogueUI;
+
+    public void ShowDialogue(string[] lines)
+    {
+        if (dialogueUI != null) dialogueUI.Play(lines);
+    }
+
     [Header("일지 UI")]
     [SerializeField] JournalUI journalUI;
 
-    public void ShowJournal(string date, string page, string title, string content, string author)
+    public void ShowJournal(string date, string title, string[] pages, string author)
     {
-        if (journalUI != null) journalUI.Open(date, page, title, content, author);
+        if (journalUI != null) journalUI.Open(date, title, pages, author);
         OpenUI();
     }
 
@@ -113,6 +116,7 @@ public class UIManager : MonoBehaviour
             combinationLockUI.Open(lockTarget);
         else
             Debug.Log("[자물쇠] UI 열림");
+        OpenUI();
     }
 
     public void CloseCombinationLock()
@@ -121,6 +125,7 @@ public class UIManager : MonoBehaviour
             combinationLockUI.Close();
         else
             Debug.Log("[자물쇠] UI 닫힘");
+        CloseUI();
     }
 
     public void OnCombinationWrong()
@@ -150,5 +155,20 @@ public class UIManager : MonoBehaviour
     {
         if (safeUI != null) safeUI.OnWrongFeedback();
         else Debug.Log("[금고] 틀림");
+    }
+
+    [Header("최종 아이템 체크 UI")]
+    [SerializeField] FinalItemCheckUI finalItemCheckUI;
+
+    public void ShowFinalItemCheck()
+    {
+        if (finalItemCheckUI != null) finalItemCheckUI.Open();
+        OpenUI();
+    }
+
+    public void CloseFinalItemCheck()
+    {
+        if (finalItemCheckUI != null) finalItemCheckUI.Close();
+        CloseUI();
     }
 }

@@ -22,21 +22,25 @@ public class InteractionManager : MonoBehaviour
         Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
 
         bool hit = Physics.Raycast(ray, out RaycastHit hitInfo, interactRange, interactableLayer);
-        if (hit)
+        IInteractable interactable = hit ? hitInfo.collider.GetComponentInParent<IInteractable>() : null;
+
+        if (interactable != null)
         {
-            ItemPickup pickup = hitInfo.collider.GetComponentInParent<ItemPickup>();
-            if (pickup != null)
-                UIManager.Instance?.ShowItemPrompt(pickup.GetItemName());
-            else if (hitInfo.collider.GetComponentInParent<IInteractable>() != null)
-                UIManager.Instance?.ShowInteractPrompt();
-            else
-                UIManager.Instance?.HideInteractPrompt();
+            string name = interactable is ItemPickup pickup
+                ? pickup.GetItemName()
+                : interactable.GetPromptName();
+            UIManager.Instance?.ShowInteractPrompt(name);
         }
         else
         {
             UIManager.Instance?.HideInteractPrompt();
         }
 
+        if (UIManager.Instance != null && UIManager.Instance.IsUIOpen)
+        {
+            UIManager.Instance.HideInteractPrompt();
+            return;
+        }
         if (!Input.GetKeyDown(KeyCode.F)) return;
         if (!hit)
         {
@@ -46,7 +50,6 @@ public class InteractionManager : MonoBehaviour
 
         Debug.Log($"[InteractionManager] 레이캐스트 히트: {hitInfo.collider.gameObject.name} / 레이어: {LayerMask.LayerToName(hitInfo.collider.gameObject.layer)}");
 
-        IInteractable interactable = hitInfo.collider.GetComponentInParent<IInteractable>();
         if (interactable != null)
             interactable.Interact();
         else
