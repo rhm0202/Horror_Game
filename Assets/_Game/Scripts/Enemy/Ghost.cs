@@ -32,7 +32,7 @@ public class Ghost : MonoBehaviour
 
     [Header("부적 설정")]
     [SerializeField] private Item amuletItem;
-    [SerializeField] private float amuletStaggerTime = 2f;
+    [SerializeField] private float amuletStaggerTime = 5f;
 
     [Header("애니메이션")]
     [SerializeField] private Animator nurseAnimator;
@@ -355,14 +355,13 @@ public class Ghost : MonoBehaviour
 
         if (amuletItem != null && Inventory.Instance != null && Inventory.Instance.HasItem(amuletItem))
         {
-            Debug.Log("[Ghost] 부적 보호 발동 → 스태거 시작");
             isStaggered = true;
             Inventory.Instance.RemoveItem(amuletItem);
+            UIManager.Instance.ShowDialogue(new string[] { "...부적이 사라진 것 같다." });
             StartCoroutine(AmuletProtection());
         }
         else
         {
-            Debug.Log("[Ghost] 부적 없음 → 게임오버");
             StartCoroutine(GameOverAfterAnimation());
         }
     }
@@ -379,14 +378,9 @@ public class Ghost : MonoBehaviour
         SetDetectionRange(false);
     }
 
-    [Header("사망 대사")]
-    [SerializeField] private string deathMessage = "...";
-
     private IEnumerator GameOverAfterAnimation()
     {
         yield return new WaitForSeconds(gameOverDelay);
-        UIManager.Instance.ShowDialogue(new string[] { deathMessage });
-        yield return new WaitUntil(() => !UIManager.Instance.IsUIOpen);
         GameManager.Instance.SetState(GameManager.GameState.GameOver);
     }
 
