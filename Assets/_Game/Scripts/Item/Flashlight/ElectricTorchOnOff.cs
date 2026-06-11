@@ -75,6 +75,7 @@ public class ElectricTorchOnOff : MonoBehaviour
 	void InputKey()
     {
 		if (!Inventory.Instance.HasFlashlight) return;
+		if (UIManager.Instance != null && UIManager.Instance.IsUIOpen) return;
 
 		if (Input.GetKeyDown(_kCode) && _flashLightOn == true)
 		{

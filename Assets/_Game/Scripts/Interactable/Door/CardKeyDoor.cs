@@ -7,6 +7,7 @@ public class CardKeyDoor : MonoBehaviour, IInteractable
 
     [Header("카드키 설정")]
     [SerializeField] Item requiredCardKey;
+    [SerializeField] string noKeyMessage = "카드키가 필요할 것 같다.";
 
     [Header("문 설정")]
     [SerializeField] DoorInteraction linkedDoor;
@@ -25,7 +26,7 @@ public class CardKeyDoor : MonoBehaviour, IInteractable
 
         if (!Inventory.Instance.HasItem(requiredCardKey))
         {
-            Debug.Log("카드키가 필요합니다.");
+            UIManager.Instance.ShowDialogue(new string[] { noKeyMessage });
             return;
         }
 

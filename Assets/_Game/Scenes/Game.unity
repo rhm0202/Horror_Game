@@ -1220,7 +1220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0.5882353}
+  m_Color: {r: 0.26415092, g: 0.15574937, b: 0.15574937, a: 0.7607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2380,6 +2380,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b050bd7751b426c47943e36c63738210, type: 2}
     - target: {fileID: 7525849560815612659, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
+      propertyPath: baseAnimSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525849560815612659, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
+      propertyPath: animSpeedMultiplier
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525849560815612659, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
       objectReference: {fileID: 665747482}
@@ -2417,6 +2425,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2169526831300739695, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1066217121}
+    - targetCorrespondingSourceObject: {fileID: 2169526831300739695, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1066217124}
   m_SourcePrefab: {fileID: 100100000, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
 --- !u!114 &170852987 stripped
 MonoBehaviour:
@@ -2859,6 +2870,7 @@ MonoBehaviour:
   promptName: "\uBB38"
   isLocked: 0
   requiredKey: {fileID: 0}
+  lockedMessage: "\uC7A0\uACA8\uC788\uB2E4."
 --- !u!1 &223234081
 GameObject:
   m_ObjectHideFlags: 0
@@ -5315,6 +5327,7 @@ MonoBehaviour:
   promptName: "\uAE08\uACE0"
   isLocked: 1
   requiredKey: {fileID: 0}
+  lockedMessage: "\uC7A0\uACA8\uC788\uB2E4. \uBE44\uBC00\uBC88\uD638\uAC00 \uD544\uC694\uD558\uB2E4."
 --- !u!1001 &396789635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6543,6 +6556,70 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 493860, guid: a73967be39a7cc74ca310e8a9d9de82d, type: 3}
   m_PrefabInstance: {fileID: 1080544113}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &505853043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 505853044}
+  - component: {fileID: 505853045}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &505853044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505853043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2041079812}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505853045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505853043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 41e221325de3830409f2d06bc96c24e6, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1001 &513208265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9617,6 +9694,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Module_DoorRoom_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1835360633106212, guid: 3889b3008743b404aba704ca0f2f2989, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4875963943707148, guid: 3889b3008743b404aba704ca0f2f2989, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.2826805
@@ -12523,6 +12604,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1535839090894461141, guid: f68e1d540b24dc44b9fc1c540e88d2d9, type: 3}
   m_PrefabInstance: {fileID: 170852986}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &1066217124
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066217113}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: -0.35
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &1072789648 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5783285195553828508, guid: dee113b2ffbed524086a372b20d9332f, type: 3}
@@ -17395,6 +17498,7 @@ MonoBehaviour:
   promptName: "\uC804\uAE30\uD568"
   isLocked: 0
   requiredKey: {fileID: 0}
+  lockedMessage: "\uC7A0\uACA8\uC788\uB2E4."
 --- !u!1 &1427837971
 GameObject:
   m_ObjectHideFlags: 0
@@ -17554,6 +17658,8 @@ MonoBehaviour:
   promptName: "\uBB38"
   isLocked: 1
   requiredKey: {fileID: 11400000, guid: 0d42ddee85395354e8a5deee1eff94bc, type: 2}
+  lockedMessage: "\uC7A0\uACA8\uC788\uB2E4. \uC5F4\uC1E0\uAC00 \uD544\uC694\uD560
+    \uAC83 \uAC19\uB2E4."
 --- !u!1 &1465889130
 GameObject:
   m_ObjectHideFlags: 0
@@ -19465,6 +19571,7 @@ MonoBehaviour:
   promptName: "\uBCF4\uAD00\uD568"
   isLocked: 1
   requiredKey: {fileID: 0}
+  lockedMessage: "\uC7A0\uACA8\uC788\uB2E4. \uC790\uBB3C\uC1E0\uB97C \uD480\uC5B4\uC57C\uD55C\uB2E4."
 --- !u!65 &1607059319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20172,6 +20279,7 @@ MonoBehaviour:
   promptName: "\uCD9C\uAD6C \uD0A4\uD328\uB4DC"
   correctPassword: 00000000080000000100000000000000
   exitDoor: {fileID: 208141715}
+  noPowerMessage: "\uC804\uB825\uC774 \uB4E4\uC5B4\uC624\uC9C0 \uC54A\uB294\uB2E4."
 --- !u!1001 &1693693277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21176,6 +21284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardKeyDoor
   promptName: "\uCE74\uB4DC\uD0A4 \uBB38"
   requiredCardKey: {fileID: 0}
+  noKeyMessage: "\uCE74\uB4DC\uD0A4\uAC00 \uD544\uC694\uD560 \uAC83 \uAC19\uB2E4."
   linkedDoor: {fileID: 0}
 --- !u!4 &1776721503 stripped
 Transform:
@@ -23633,6 +23742,7 @@ Transform:
   - {fileID: 2133008762}
   - {fileID: 811030823}
   - {fileID: 1235167935}
+  - {fileID: 505853044}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2046626574
@@ -24170,8 +24280,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4289572269
+  m_fontColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

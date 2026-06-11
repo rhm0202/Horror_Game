@@ -12,6 +12,7 @@ public class DoorInteraction : MonoBehaviour, IInteractable
     [Header("잠금 설정")]
     public bool isLocked = false;
     public Item requiredKey;
+    [SerializeField] string lockedMessage = "잠겨있다.";
 
     private bool isOpen = false;
     private Quaternion closedRotation;
@@ -37,11 +38,8 @@ public class DoorInteraction : MonoBehaviour, IInteractable
         {
             if (requiredKey == null || !Inventory.Instance.HasItem(requiredKey))
             {
-                Debug.Log("열쇠가 필요합니다.");
-
-                // ↓ 잠긴 문 상호작용 효과음
+                UIManager.Instance.ShowDialogue(new string[] { lockedMessage });
                 SFXManager.Instance.PlaySFX("door_locked");
-
                 return;
             }
             isLocked = false;

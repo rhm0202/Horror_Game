@@ -12,13 +12,20 @@ public class ExitKeypad : MonoBehaviour, IInteractable, IKeypadTarget
     [Header("열릴 문")]
     [SerializeField] DoorInteraction exitDoor;
 
+    [Header("전력 없을 때 대사")]
+    [SerializeField] string noPowerMessage = "전력이 들어오지 않는다.";
+
     private bool isUnlocked = false;
 
     public string GetPromptName() => promptName;
 
     public void Interact()
     {
-        if (!enabled) return;
+        if (!enabled)
+        {
+            UIManager.Instance.ShowDialogue(new string[] { noPowerMessage });
+            return;
+        }
         if (isUnlocked) return;
         UIManager.Instance.ShowSafe(this);
     }

@@ -28,6 +28,9 @@ public class FinalItemCheckUI : MonoBehaviour
     [Header("탈출구 키패드")]
     [SerializeField] ExitKeypad exitKeypad;
 
+    [Header("전력 복구 대사")]
+    [SerializeField] string powerRestoredMessage = "전력이 복구됐다. 이제 나갈 수 있을 것 같다.";
+
     int checkedCount = 0;
 
     void Awake()
@@ -80,6 +83,7 @@ public class FinalItemCheckUI : MonoBehaviour
         if (exitKeypad != null) exitKeypad.enabled = true;
 
         UIManager.Instance.CloseFinalItemCheck();
+        UIManager.Instance.ShowDialogue(new string[] { powerRestoredMessage });
     }
 
     bool initialized = false;

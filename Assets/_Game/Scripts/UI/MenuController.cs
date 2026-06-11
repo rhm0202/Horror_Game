@@ -1,10 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
     [Header("엔딩 씬 전용")]
     [SerializeField] GameObject clearScreen;
     [SerializeField] GameObject gameOverScreen;
+    [SerializeField] TMP_Text timeText;
 
     void Start()
     {
@@ -16,6 +18,9 @@ public class MenuController : MonoBehaviour
         bool isGameOver = GameManager.LastState == GameManager.GameState.GameOver;
         clearScreen.SetActive(!isGameOver);
         gameOverScreen.SetActive(isGameOver);
+
+        if (!isGameOver && timeText != null)
+            timeText.text = GameManager.GetFormattedTime();
     }
 
     // 버튼 콜백
