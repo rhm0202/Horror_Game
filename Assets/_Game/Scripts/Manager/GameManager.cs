@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         EscapeTime = 0f;
         startTime = Time.realtimeSinceStartup;
         timing = true;
+        SFXManager.Instance?.PlaySFX("game_start");
     }
 
     void Update()
